@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import useAPi from "./hooks/useApi";
 
 function App() {
+  const [data, setData] = useState(null);
+
+  const { isLoading, error } = useAPi({
+    url: "https://fakestoreapi.com/products",
+    onSuccess: setData,
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="App App-header">
+      <header>
+        <h1>Best Goshdang Ecom Store</h1>
       </header>
+      <section>
+        {error && <p>OOPS! Looks like something went wrong!</p>}
+        {isLoading && <p>Loading...</p>}
+        {data?.map((product) => (
+          <div key={product.id}>
+            <h3>{product.title}</h3>
+            <img height="100" src={product.image} alt={product.title} />
+          </div>
+        ))}
+      </section>
     </div>
   );
 }
