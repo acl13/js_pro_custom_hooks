@@ -1,11 +1,11 @@
 import "./App.css";
 import { useState } from "react";
-import useAPi from "./hooks/useApi";
+import useApi from "./hooks/useApi";
 
 function App() {
   const [data, setData] = useState(null);
 
-  const { isLoading, error } = useAPi({
+  const { isLoading, error } = useApi({
     url: "https://fakestoreapi.com/products",
     onSuccess: setData,
   });
